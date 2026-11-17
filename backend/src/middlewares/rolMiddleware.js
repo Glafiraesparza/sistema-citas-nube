@@ -1,0 +1,17 @@
+const verificarAdmin = (req, res, next) => {
+  if (!req.usuario) {
+    return res.status(401).json({
+      mensaje: "Usuario no autenticado"
+    });
+  }
+
+  if (req.usuario.rol !== "ADMIN") {
+    return res.status(403).json({
+      mensaje: "No tienes permisos de administrador"
+    });
+  }
+
+  next();
+};
+
+module.exports = verificarAdmin;
