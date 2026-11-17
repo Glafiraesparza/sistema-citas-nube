@@ -182,3 +182,15 @@
     border-right-color: var(--border);
   }
 }
+
+/* Separación entre tarjetas del dashboard */
+.dashboard-grid,
+.dashboard-stats,
+.dashboard-content {
+  gap: 20px;
+}
+
+/* Espacio entre secciones */
+.dashboard-section {
+  margin-bottom: 20px;
+}
