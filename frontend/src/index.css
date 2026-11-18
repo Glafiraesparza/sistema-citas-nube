@@ -1018,6 +1018,165 @@ h1, h2, h3, p { margin: 0; }
   .medicos-edicion-acciones { grid-column: auto; }
 }
 
+.pacientes-listado,
+.pacientes-edicion { padding: 20px; }
+
+.pacientes-filtros {
+  display: grid;
+  grid-template-columns: minmax(230px, 1.6fr) minmax(170px, 1fr) minmax(170px, 1fr) auto;
+  gap: 14px;
+  align-items: end;
+}
+
+.pacientes-control { min-width: 0; }
+
+.pacientes-control .form-label,
+.pacientes-tamano-control .form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.pacientes-control .form-control,
+.pacientes-control .form-select {
+  min-height: 42px;
+  border-color: #dbe3ec;
+  border-radius: 10px;
+  color: var(--ink);
+}
+
+.pacientes-control .form-control:focus,
+.pacientes-control .form-select:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+.pacientes-search-input { position: relative; }
+
+.pacientes-search-input > svg {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  color: var(--muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.pacientes-search-input .form-control { padding-left: 38px; }
+
+.pacientes-limpiar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+  white-space: nowrap;
+}
+
+.pacientes-resultados-barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 14px;
+  margin: 20px 0 14px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.pacientes-conteo {
+  color: var(--navy-deep);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pacientes-tamano-control { width: 112px; }
+.pacientes-tamano-control .form-label { margin-bottom: 5px; }
+.pacientes-tamano-control .form-select { border-color: #dbe3ec; border-radius: 8px; }
+.pacientes-tabla-wrap { border-top: 1px solid var(--line); }
+.pacientes-tabla { min-width: 850px; }
+.pacientes-tabla td { padding-top: 14px; padding-bottom: 14px; }
+.pacientes-nombre { color: var(--navy-deep); }
+
+.pacientes-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  min-width: 180px;
+}
+
+.pacientes-acciones .btn,
+.pacientes-edicion-acciones .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.pacientes-historial-row td { background: #f8fafc; }
+
+.pacientes-historial {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 4px;
+}
+
+.pacientes-historial > strong { color: var(--navy-deep); }
+.pacientes-historial p { color: var(--muted); font-size: 13px; }
+.pacientes-historial-tabla { min-width: 650px; }
+
+.pacientes-paginacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.pacientes-paginacion-controles { display: flex; align-items: center; gap: 10px; }
+.pacientes-paginacion .icon-button:disabled { opacity: 0.45; cursor: not-allowed; }
+.pacientes-vacio { padding: 32px 12px; }
+
+.pacientes-edicion-cabecera h2 {
+  color: var(--navy-deep);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.pacientes-edicion-cabecera p { margin-top: 4px; color: var(--muted); font-size: 14px; }
+
+.pacientes-edicion-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.pacientes-edicion-acciones { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
+
+@media (max-width: 900px) {
+  .pacientes-filtros { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pacientes-limpiar { grid-column: 1 / -1; justify-self: end; }
+}
+
+@media (max-width: 600px) {
+  .pacientes-listado,
+  .pacientes-edicion { padding: 16px; }
+  .pacientes-filtros,
+  .pacientes-edicion-form { grid-template-columns: minmax(0, 1fr); }
+  .pacientes-limpiar { grid-column: auto; width: 100%; }
+  .pacientes-resultados-barra { align-items: stretch; }
+  .pacientes-tamano-control { width: 90px; }
+  .pacientes-paginacion { align-items: flex-start; flex-direction: column; }
+  .pacientes-paginacion-controles { align-self: flex-end; }
+  .pacientes-edicion-acciones { grid-column: auto; }
+}
+
 .banner {
   border-radius: 12px;
   padding: 12px 14px;

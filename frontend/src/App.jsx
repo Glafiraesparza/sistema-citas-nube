@@ -16,6 +16,10 @@ import MedicosListado from "./components/MedicosListado";
 
 import MedicoEdicionForm from "./components/MedicoEdicionForm";
 
+import PacientesListado from "./components/PacientesListado";
+
+import PacienteEdicionForm from "./components/PacienteEdicionForm";
+
 import { clasificarMensaje } from "./utils/formato";
 
 
@@ -91,6 +95,10 @@ const [cargandoPanel, setCargandoPanel] = useState(false);
 const [confirmacion, setConfirmacion] = useState(null);
 
 const [mostrarFormularioPaciente, setMostrarFormularioPaciente] = useState(false);
+
+const [pacienteEnEdicion, setPacienteEnEdicion] = useState(null);
+
+const [guardandoEdicionPaciente, setGuardandoEdicionPaciente] = useState(false);
 
 
 
@@ -837,6 +845,44 @@ const response = await axios.get(
 
   };
 
+
+
+const guardarEdicionPaciente = async (datos) => {
+  if (!pacienteEnEdicion) return;
+
+  setGuardandoEdicionPaciente(true);
+
+  try {
+    const token = sessionStorage.getItem("token");
+    const response = await axios.put(
+      `http://localhost:3000/api/pacientes/${pacienteEnEdicion.id}`,
+      datos,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    const pacienteActualizado = response.data.paciente;
+    setPacientes((actuales) =>
+      actuales.map((paciente) =>
+        paciente.id === pacienteActualizado.id
+          ? { ...paciente, ...pacienteActualizado }
+          : paciente
+      )
+    );
+    setPacienteEnEdicion(null);
+    setMensaje(response.data.mensaje || "Paciente actualizado correctamente");
+  } catch (error) {
+    console.error(error);
+    setMensaje(
+      error.response?.data?.mensaje || "Error al actualizar el paciente"
+    );
+  } finally {
+    setGuardandoEdicionPaciente(false);
+  }
+};
 
 
 const cargarHorarios = async () => {
@@ -2095,8 +2141,14 @@ const iniciarReprogramacion = (cita) => {
 
           <div className="mt-5">
 
-            <div className="card mb-4">
+            <div className="page-head">
+              <div>
+                <h1>Pacientes</h1>
+                <p>Directorio y seguimiento de pacientes del consultorio.</p>
+              </div>
+            </div>
 
+            <div className="card mb-4">
               <div className="card-body">
 
 
@@ -2289,67 +2341,21 @@ const iniciarReprogramacion = (cita) => {
 
 
 
-            <h2>Lista de pacientes</h2>
-
-
-
-            {pacientes.length === 0 ? (
-
-              <p>No hay pacientes registrados.</p>
-
-            ) : (
-
-              <table className="table table-bordered table-striped">
-
-
-
-                <thead>
-
-                  <tr>
-
-                    <th>ID</th>
-
-                    <th>Nombre</th>
-
-                    <th>Email</th>
-
-                    <th>Teléfono</th>
-
-                  </tr>
-
-                </thead>
-
-
-
-                <tbody>
-
-                  {pacientes.map((paciente) => (
-
-                    <tr key={paciente.id}>
-
-                      <td>{paciente.id}</td>
-
-                      <td>{paciente.usuario.nombre}</td>
-
-                      <td>{paciente.usuario.email}</td>
-
-                      <td>
-
-                        {paciente.telefono || "Sin teléfono"}
-
-                      </td>
-
-                    </tr>
-
-                  ))}
-
-                </tbody>
-
-
-
-              </table>
-
+            {pacienteEnEdicion && (
+              <PacienteEdicionForm
+                key={pacienteEnEdicion.id}
+                paciente={pacienteEnEdicion}
+                guardando={guardandoEdicionPaciente}
+                onGuardar={guardarEdicionPaciente}
+                onCancelar={() => setPacienteEnEdicion(null)}
+              />
             )}
+
+            <PacientesListado
+              pacientes={pacientes}
+              citas={citas}
+              onEditar={setPacienteEnEdicion}
+            />
 
 
 
