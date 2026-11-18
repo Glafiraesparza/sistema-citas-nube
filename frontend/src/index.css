@@ -831,6 +831,193 @@ h1, h2, h3, p { margin: 0; }
   .citas-tamano { width: 100%; }
 }
 
+.medicos-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.medicos-listado,
+.medicos-edicion { padding: 20px; }
+
+.medicos-filtros {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.5fr) minmax(180px, 1fr) minmax(170px, 1fr) auto;
+  gap: 14px;
+  align-items: end;
+}
+
+.medicos-control { min-width: 0; }
+
+.medicos-control .form-label,
+.medicos-tamano-control .form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.medicos-control .form-control,
+.medicos-control .form-select {
+  min-height: 42px;
+  border-color: #dbe3ec;
+  border-radius: 10px;
+  color: var(--ink);
+}
+
+.medicos-control .form-control:focus,
+.medicos-control .form-select:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+.medicos-search-input { position: relative; }
+
+.medicos-search-input > svg {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  color: var(--muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.medicos-search-input .form-control { padding-left: 38px; }
+
+.medicos-limpiar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+  white-space: nowrap;
+}
+
+.medicos-resultados-barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 14px;
+  margin: 20px 0 14px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.medicos-conteo {
+  color: var(--navy-deep);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.medicos-tamano-control { width: 112px; }
+.medicos-tamano-control .form-label { margin-bottom: 5px; }
+.medicos-tamano-control .form-select { border-color: #dbe3ec; border-radius: 8px; }
+.medicos-tabla-wrap { border-top: 1px solid var(--line); }
+.medicos-tabla { min-width: 760px; }
+.medicos-tabla td { padding-top: 14px; padding-bottom: 14px; }
+.medicos-tabla td:nth-child(3) { min-width: 270px; }
+.medicos-nombre { display: block; color: var(--navy-deep); }
+.medicos-sin-horario { color: var(--muted); font-size: 13px; }
+
+.medicos-horarios-resumen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.medico-horario-chip {
+  display: inline-flex;
+  padding: 4px 7px;
+  border-radius: 6px;
+  background: var(--teal-soft);
+  color: var(--teal-dark);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.medicos-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  min-width: 205px;
+}
+
+.medicos-acciones .btn,
+.medicos-edicion-acciones .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.medicos-detalle-row td { background: #f8fafc; }
+
+.medicos-detalle-horarios {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.7fr) 2fr;
+  align-items: start;
+  gap: 16px;
+  padding: 8px 4px;
+}
+
+.medicos-detalle-horarios > strong { color: var(--navy-deep); }
+.medicos-detalle-horarios ul { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.medicos-detalle-horarios li { display: flex; gap: 7px; padding: 6px 9px; border: 1px solid var(--line); border-radius: 7px; background: white; font-size: 13px; }
+.medicos-detalle-horarios li span:first-child { color: var(--navy); font-weight: 700; }
+.medicos-detalle-horarios p { color: var(--muted); font-size: 13px; }
+
+.medicos-paginacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.medicos-paginacion-controles { display: flex; align-items: center; gap: 10px; }
+.medicos-paginacion .icon-button:disabled { opacity: 0.45; cursor: not-allowed; }
+.medicos-vacio { padding: 32px 12px; }
+
+.medicos-edicion-cabecera h2 {
+  color: var(--navy-deep);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.medicos-edicion-cabecera p { margin-top: 4px; color: var(--muted); font-size: 14px; }
+
+.medicos-edicion-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.medicos-edicion-acciones { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
+
+@media (max-width: 900px) {
+  .medicos-filtros { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .medicos-limpiar { grid-column: 1 / -1; justify-self: end; }
+}
+
+@media (max-width: 600px) {
+  .medicos-listado,
+  .medicos-edicion { padding: 16px; }
+  .medicos-filtros,
+  .medicos-edicion-form { grid-template-columns: minmax(0, 1fr); }
+  .medicos-limpiar { grid-column: auto; width: 100%; }
+  .medicos-resultados-barra { align-items: stretch; }
+  .medicos-tamano-control { width: 90px; }
+  .medicos-paginacion { align-items: flex-start; flex-direction: column; }
+  .medicos-paginacion-controles { align-self: flex-end; }
+  .medicos-detalle-horarios { grid-template-columns: minmax(0, 1fr); }
+  .medicos-edicion-acciones { grid-column: auto; }
+}
+
 .banner {
   border-radius: 12px;
   padding: 12px 14px;

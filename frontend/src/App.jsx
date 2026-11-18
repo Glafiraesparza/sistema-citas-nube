@@ -12,11 +12,11 @@ import ConfirmDialog from "./components/ConfirmDialog";
 
 import CitasListado from "./components/CitasListado";
 
-import {
+import MedicosListado from "./components/MedicosListado";
 
-  clasificarMensaje,
+import MedicoEdicionForm from "./components/MedicoEdicionForm";
 
-} from "./utils/formato";
+import { clasificarMensaje } from "./utils/formato";
 
 
 
@@ -37,8 +37,6 @@ const diasSemana = [
   { id: 0, nombre: "Domingo" }
 
 ];
-
-
 
 function App() {
 
@@ -117,6 +115,10 @@ const [horaInicioMedico, setHoraInicioMedico] = useState("09:00");
 const [horaFinMedico, setHoraFinMedico] = useState("18:00");
 
 const [guardandoMedico, setGuardandoMedico] = useState(false);
+
+const [medicoEnEdicion, setMedicoEnEdicion] = useState(null);
+
+const [guardandoEdicionMedico, setGuardandoEdicionMedico] = useState(false);
 
 
 
@@ -311,28 +313,14 @@ const cargarMedicos = async () => {
     try {
 
 const token = sessionStorage.getItem("token");
+const headers = { Authorization: `Bearer ${token}` };
+const [responseMedicos, responseHorarios] = await Promise.all([
+  axios.get("http://localhost:3000/api/medicos", { headers }),
+  axios.get("http://localhost:3000/api/horarios", { headers })
+]);
 
-
-
-const response = await axios.get(
-
-        "http://localhost:3000/api/medicos",
-
-        {
-
-          headers: {
-
-            Authorization: `Bearer ${token}`
-
-          }
-
-        }
-
-      );
-
-
-
-      setMedicos(response.data);
+      setMedicos(responseMedicos.data);
+      setHorarios(responseHorarios.data);
 
       setVista("medicos");
 
@@ -375,8 +363,6 @@ e.preventDefault();
     return;
 
   }
-
-
 
   if (horaInicioMedico >= horaFinMedico) {
 
@@ -508,6 +494,17 @@ const response = await axios.get(
 
     setMedicos(response.data);
 
+const responseHorarios = await axios.get(
+      "http://localhost:3000/api/horarios",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    setHorarios(responseHorarios.data);
+
 
 
     if (fallidos > 0) {
@@ -576,6 +573,42 @@ const response = await axios.get(
 
 };
 
+
+
+const guardarEdicionMedico = async (datos) => {
+  if (!medicoEnEdicion) return;
+
+  setGuardandoEdicionMedico(true);
+
+  try {
+    const token = sessionStorage.getItem("token");
+    const response = await axios.put(
+      `http://localhost:3000/api/medicos/${medicoEnEdicion.id}`,
+      datos,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    const medicoActualizado = response.data.medico;
+    setMedicos((actuales) =>
+      actuales.map((medico) =>
+        medico.id === medicoActualizado.id ? medicoActualizado : medico
+      )
+    );
+    setMedicoEnEdicion(null);
+    setMensaje(response.data.mensaje || "Médico actualizado correctamente");
+  } catch (error) {
+    console.error(error);
+    setMensaje(
+      error.response?.data?.mensaje || "Error al actualizar el médico"
+    );
+  } finally {
+    setGuardandoEdicionMedico(false);
+  }
+};
 
 
 const cargarUsuariosDisponibles = async () => {
@@ -1754,7 +1787,7 @@ const iniciarReprogramacion = (cita) => {
 
         {vista === "medicos" && usuario.rol === "ADMIN" && (
 
-          <div>
+          <div className="medicos-page">
 
             <div className="page-head">
 
@@ -2034,59 +2067,21 @@ const iniciarReprogramacion = (cita) => {
 
 
 
-            {medicos.length === 0 ? (
-
-              <p>No hay médicos registrados.</p>
-
-            ) : (
-
-              <table className="table table-bordered table-striped">
-
-
-
-                <thead>
-
-                  <tr>
-
-                    <th>ID</th>
-
-                    <th>Nombre</th>
-
-                    <th>Teléfono</th>
-
-                  </tr>
-
-                </thead>
-
-
-
-                <tbody>
-
-                  {medicos.map((medico) => (
-
-                    <tr key={medico.id}>
-
-                      <td>{medico.id}</td>
-
-                      <td>{medico.nombre}</td>
-
-                      <td>
-
-                        {medico.telefono || "Sin teléfono"}
-
-                      </td>
-
-                    </tr>
-
-                  ))}
-
-                </tbody>
-
-
-
-              </table>
-
+            {medicoEnEdicion && (
+              <MedicoEdicionForm
+                key={medicoEnEdicion.id}
+                medico={medicoEnEdicion}
+                guardando={guardandoEdicionMedico}
+                onGuardar={guardarEdicionMedico}
+                onCancelar={() => setMedicoEnEdicion(null)}
+              />
             )}
+
+            <MedicosListado
+              medicos={medicos}
+              horarios={horarios}
+              onEditar={setMedicoEnEdicion}
+            />
 
 
 
