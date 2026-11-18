@@ -1177,6 +1177,136 @@ h1, h2, h3, p { margin: 0; }
   .pacientes-edicion-acciones { grid-column: auto; }
 }
 
+.horarios-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.horarios-listado { padding: 20px; }
+
+.horarios-filtros {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.5fr) minmax(170px, 1fr) minmax(170px, 1fr) auto;
+  gap: 14px;
+  align-items: end;
+}
+
+.horarios-control { min-width: 0; }
+
+.horarios-control .form-label,
+.horarios-opcion .form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.horarios-control .form-control,
+.horarios-control .form-select {
+  min-height: 42px;
+  border-color: #dbe3ec;
+  border-radius: 10px;
+  color: var(--ink);
+}
+
+.horarios-control .form-control:focus,
+.horarios-control .form-select:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+.horarios-search-input { position: relative; }
+
+.horarios-search-input > svg {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  color: var(--muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.horarios-search-input .form-control { padding-left: 38px; }
+
+.horarios-limpiar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+  white-space: nowrap;
+}
+
+.horarios-resultados-barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  margin: 20px 0 14px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.horarios-conteo {
+  color: var(--navy-deep);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.horarios-opciones { display: flex; align-items: end; gap: 12px; }
+.horarios-opcion { min-width: 0; width: 185px; }
+.horarios-direccion { width: 140px; }
+.horarios-tamano { width: 104px; }
+.horarios-opcion .form-label { margin-bottom: 5px; }
+.horarios-opcion .form-select { border-color: #dbe3ec; border-radius: 8px; }
+.horarios-tabla-wrap { border-top: 1px solid var(--line); }
+.horarios-tabla { min-width: 620px; }
+.horarios-tabla td { padding-top: 14px; padding-bottom: 14px; }
+.horarios-medico { color: var(--navy-deep); }
+
+.horarios-dia {
+  display: inline-flex;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--teal-soft);
+  color: var(--teal-dark);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.horarios-paginacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.horarios-paginacion-controles { display: flex; align-items: center; gap: 10px; }
+.horarios-paginacion .icon-button:disabled { opacity: 0.45; cursor: not-allowed; }
+.horarios-vacio { padding: 32px 12px; }
+
+@media (max-width: 1000px) {
+  .horarios-filtros { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .horarios-limpiar { grid-column: 1 / -1; justify-self: end; }
+}
+
+@media (max-width: 700px) {
+  .horarios-listado { padding: 16px; }
+  .horarios-filtros { grid-template-columns: minmax(0, 1fr); }
+  .horarios-limpiar { grid-column: auto; width: 100%; }
+  .horarios-resultados-barra { align-items: stretch; flex-direction: column; }
+  .horarios-opciones { align-items: stretch; flex-wrap: wrap; }
+  .horarios-opcion { flex: 1 1 150px; width: auto; }
+  .horarios-tamano { flex: 0 0 104px; }
+  .horarios-paginacion { align-items: flex-start; flex-direction: column; }
+  .horarios-paginacion-controles { align-self: flex-end; }
+}
+
 .banner {
   border-radius: 12px;
   padding: 12px 14px;

@@ -20,6 +20,8 @@ import PacientesListado from "./components/PacientesListado";
 
 import PacienteEdicionForm from "./components/PacienteEdicionForm";
 
+import HorariosListado from "./components/HorariosListado";
+
 import { clasificarMensaje } from "./utils/formato";
 
 
@@ -2371,67 +2373,14 @@ const iniciarReprogramacion = (cita) => {
 
 
 
-            <h2>Lista de horarios</h2>
+            <div className="page-head">
+              <div>
+                <h1>Horarios</h1>
+                <p>Horarios de atención configurados por médico.</p>
+              </div>
+            </div>
 
-
-
-            {horarios.length === 0 ? (
-
-              <p>No hay horarios registrados.</p>
-
-            ) : (
-
-              <table className="table table-bordered table-striped">
-
-
-
-                <thead>
-
-                  <tr>
-
-                    <th>ID</th>
-
-                    <th>Médico</th>
-
-                    <th>Día</th>
-
-                    <th>Hora inicio</th>
-
-                    <th>Hora fin</th>
-
-                  </tr>
-
-                </thead>
-
-
-
-                <tbody>
-
-                  {horarios.map((horario) => (
-
-                    <tr key={horario.id}>
-
-                      <td>{horario.id}</td>
-
-                      <td>{horario.medico.nombre}</td>
-
-                      <td>{horario.diaSemana}</td>
-
-                      <td>{horario.horaInicio}</td>
-
-                      <td>{horario.horaFin}</td>
-
-                    </tr>
-
-                  ))}
-
-                </tbody>
-
-
-
-              </table>
-
-            )}
+            <HorariosListado horarios={horarios} />
 
 
 
