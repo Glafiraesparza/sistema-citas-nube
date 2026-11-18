@@ -13,7 +13,27 @@ const citaRoutes = require("./routes/citaRoutes");
 const app = express();
 
 // Middlewares
-app.use(cors());
+const frontendOrigins = (process.env.FRONTEND_URL || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const localDevelopmentOrigins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173"
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    const permitido =
+      !origin ||
+      frontendOrigins.includes(origin) ||
+      (process.env.NODE_ENV !== "production" &&
+        localDevelopmentOrigins.includes(origin));
+
+    callback(null, permitido);
+  }
+}));
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
