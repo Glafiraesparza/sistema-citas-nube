@@ -10,19 +10,11 @@ import Dashboard from "./components/Dashboard";
 
 import ConfirmDialog from "./components/ConfirmDialog";
 
-import StatusBadge from "./components/StatusBadge";
-
-import { HeartPulse } from "lucide-react";
+import CitasListado from "./components/CitasListado";
 
 import {
 
   clasificarMensaje,
-
-  fechaLegible,
-
-  horaLegible,
-
-  nombreDia
 
 } from "./utils/formato";
 
@@ -2450,11 +2442,14 @@ const iniciarReprogramacion = (cita) => {
 
         {vista === "citas" && (
 
-          <div className="mt-5">
+          <div className="citas-page">
 
-
-
-            <h2>Lista de citas</h2>
+            <div className="page-head">
+              <div>
+                <h1>Citas</h1>
+                <p>Agenda y seguimiento de citas médicas.</p>
+              </div>
+            </div>
 
             {(usuario.rol === "PACIENTE" || usuario.rol === "ADMIN") && (
 
@@ -3004,149 +2999,14 @@ const fecha = e.target.value;
 
 
 
-            {citas.length === 0 ? (
-
-              <p>No hay citas registradas.</p>
-
-            ) : (
-
-              <table className="table table-bordered table-striped">
-
-
-
-                <thead>
-
-                  <tr>
-
-                    <th>ID</th>
-
-                    <th>Paciente</th>
-
-                    <th>Médico</th>
-
-                    <th>Fecha</th>
-
-                    <th>Hora</th>
-
-                    <th>Estado</th>
-
-                    <th>Motivo</th>
-
-                    <th>Acciones</th>
-
-                  </tr>
-
-                </thead>
-
-
-
-                <tbody>
-
-                  {citas.map((cita) => (
-
-                    <tr key={cita.id}>
-
-                      <td>{cita.id}</td>
-
-                      <td>{cita.paciente.usuario.nombre}</td>
-
-                      <td>{cita.medico.nombre}</td>
-
-                      <td>{cita.fecha.substring(0, 10)}</td>
-
-                      <td>{cita.hora}</td>
-
-                      <td>{cita.estado}</td>
-
-                      <td>{cita.motivo || "Sin motivo"}</td>
-
-                      <td>
-
-                        {cita.estado === "PROGRAMADA" && (
-
-                          <div className="d-flex gap-2 flex-wrap">
-
-
-
-                            {usuario.rol === "ADMIN" && (
-
-                              <>
-
-                                <button
-
-                                  className="btn btn-sm btn-primary"
-
-                                  type="button"
-
-                                  onClick={() => abrirReprogramacion(cita)}
-
-                                >
-
-                                  Reprogramar
-
-                                </button>
-
-
-
-                                <button
-
-                                  className="btn btn-sm btn-success"
-
-                                  type="button"
-
-                                  onClick={() => marcarCitaAtendida(cita.id)}
-
-                                >
-
-                                  Marcar atendida
-
-                                </button>
-
-                              </>
-
-                            )}
-
-
-
-                            {(usuario.rol === "ADMIN" ||
-
-                              usuario.rol === "PACIENTE") && (
-
-                              <button
-
-                                className="btn btn-sm btn-warning"
-
-                                type="button"
-
-                                onClick={() => cancelarCita(cita.id)}
-
-                              >
-
-                                Cancelar cita
-
-                              </button>
-
-                            )}
-
-
-
-                          </div>
-
-                        )}
-
-                    </td>
-
-                    </tr>
-
-                  ))}
-
-                </tbody>
-
-
-
-              </table>
-
-            )}
+            <CitasListado
+              citas={citas}
+              medicos={medicos}
+              rol={usuario.rol}
+              onReprogramar={abrirReprogramacion}
+              onAtender={marcarCitaAtendida}
+              onCancelar={cancelarCita}
+            />
 
 
 
